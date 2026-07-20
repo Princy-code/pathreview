@@ -8,6 +8,21 @@
 
 **Tier:** [x] Tier 1  [ ] Tier 2  [ ] Tier 3
 
+**Why this issue fits:**
+This is my first contribution to this codebase, so I deliberately looked for a Tier 1
+issue rather than something touching the RAG pipeline or agent orchestration I'm not
+yet familiar with. Before picking it, I cross-checked the live GitHub issue tracker
+(not just the course's static issue list) and found that most other Tier 1 "good
+first issue" bugs already had 3-5 competing open PRs from classmates — this one had
+none. I also verified the bug myself locally by running
+`tests/unit/test_bias_detector.py` rather than trusting the issue title, which
+confirmed 9 of 29 tests currently fail. The fix is scoped to a single file
+(`safety/bias_detector.py`, a ~40-line class with two regex-pattern lists) with an
+existing, thorough test file that already encodes the expected behavior, so I have a
+clear, bounded definition of "done" without needing to design new test cases from
+scratch — a good match for a first issue where I'm still learning the codebase's
+conventions.
+
 **Problem summary:**
 `safety/bias_detector.py` flags biased feedback language using a fixed list of regex
 patterns for two categories: dismissive comments about educational background (e.g.
