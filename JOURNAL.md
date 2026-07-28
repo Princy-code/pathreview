@@ -43,3 +43,28 @@ sits between the RAG-generated feedback and what's shown to the end user.
 **Setup confirmation:** [x] App runs locally at localhost:5173
 
 **Cohort ledger:** [x] Issue added to cohort ledger
+
+## Week 8 — Reproduction & solution planning
+
+**Reproduction commit link:** https://github.com/Princy-code/pathreview/commit/df043fc226e657ee4b4da884f6053a7508ca9d70
+
+**Reproduction summary:**
+Ran `pytest tests/unit/test_bias_detector.py -v` and confirmed the bug is real and
+reproducible: 9 of 29 tests fail because `DISMISSIVE_PATTERNS` and
+`DEMOGRAPHIC_PATTERNS` only match a handful of rigid phrasings. For example,
+`test_negative_educational_claim` ("self-taught developers are not equal to
+university graduates") and `test_assumption_vs_observation` ("bootcamp attendance
+means inadequate training") should be flagged as biased but currently return
+`False`. Added a `NOTE(#151)` comment in `safety/bias_detector.py` documenting this
+so the gap is visible directly in the source, not just in test output.
+
+**PLAN.md link:** https://github.com/Princy-code/pathreview/blob/fix/151-bias-detector-narrow-patterns/PLAN.md
+
+**Walkthrough video (recommended):** Not recorded this week (optional, not graded).
+
+**Blockers or open questions:**
+Still deciding whether the fix should stay pure-regex (consistent with the existing
+code style) or move to a keyword-proximity helper to avoid regex alternation
+becoming unwieldy — will decide in Week 9 based on how many alternations are needed
+to cover all 9 failing cases without introducing false positives on the 23 passing
+"not flagged" tests.
