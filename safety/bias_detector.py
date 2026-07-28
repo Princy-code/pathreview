@@ -1,6 +1,7 @@
 """Bias detection in generated feedback."""
 
 import re
+
 import structlog
 
 logger = structlog.get_logger()
@@ -8,6 +9,13 @@ logger = structlog.get_logger()
 
 class BiasDetector:
     """Detect biased language in feedback."""
+
+    # NOTE(#151): the patterns below only match a handful of rigid phrasings and
+    # miss common variations (e.g. "self-taught developers are not equal to
+    # university graduates", "bootcamp attendance means inadequate training").
+    # Reproduced via: pytest tests/unit/test_bias_detector.py -v
+    #   -> 9 of 29 tests fail, including test_negative_educational_claim,
+    #      test_rich_poor_assumption, and test_assumption_vs_observation.
 
     # Genuinely dismissive phrases about educational background
     DISMISSIVE_PATTERNS = [
