@@ -68,3 +68,57 @@ code style) or move to a keyword-proximity helper to avoid regex alternation
 becoming unwieldy — will decide in Week 9 based on how many alternations are needed
 to cover all 9 failing cases without introducing false positives on the 23 passing
 "not flagged" tests.
+
+## Week 9 — Solution building & PR submission
+
+### Check-in 1 (mid-week)
+
+**Current progress:**
+Implemented the fix from `PLAN.md`: broadened `DISMISSIVE_PATTERNS` and
+`DEMOGRAPHIC_PATTERNS` in `safety/bias_detector.py` to accept the phrasing
+variations the existing test suite expects (e.g. plural nouns like "developers",
+extra connecting words like "means", "are" instead of "is", and "developers from"
+in addition to "person from"). Went with the pure-regex approach from `PLAN.md`
+rather than a keyword-proximity helper — the alternation stayed small enough (a
+handful of extra alternatives per pattern) that a rewrite wasn't justified.
+
+**Next steps:**
+Run the full self-review (`make check`, `make test-unit`), confirm no regressions
+outside `test_bias_detector.py`, and open the PR.
+
+**Blockers:**
+None.
+
+---
+
+### Check-in 2 (end of week)
+
+**PR link:** [paste PR link here after opening it]
+
+**Branch:** fix/151-bias-detector-narrow-patterns
+
+**What you built:**
+Broadened the regex patterns in `safety/bias_detector.py`'s `BiasDetector` class so
+`detect_bias()` catches common phrasing variations of dismissive educational
+comments and demographic assumptions (different verbs like "means"/"lacks",
+plural nouns, reordered subject/verb structure) instead of only a handful of exact
+phrase templates. The function's signature and return contract are unchanged.
+
+**Tests added or updated:**
+No new tests — `tests/unit/test_bias_detector.py` already encoded the intended
+behavior (that's how I verified the bug in Week 8). All 32 tests in that file now
+pass; previously 9 failed. Confirmed the fix didn't introduce false positives on
+the file's 12+ "not flagged" tests covering neutral/positive feedback.
+
+**Self-review confirmation:** [x] make check passes  [x] make test-unit passes
+(Note: the repo has pre-existing failures unrelated to this change — 181 ruff
+errors repo-wide and 44 failing tests in other modules, e.g.
+`test_review_service.py`, `test_skill_extractor.py`, `test_tech_detector.py`,
+tied to other open issues classmates are fixing. `safety/bias_detector.py` itself
+is clean: ruff, black, and mypy all pass with zero errors, and
+`tests/unit/test_bias_detector.py` is 32/32 passing. Confirmed via
+`pytest tests/unit -m unit -q` before and after my change that this PR introduces
+no new failures.)
+
+**Draft PR feedback received from:** none — submitting under today's deadline
+without time for a peer review cycle.
