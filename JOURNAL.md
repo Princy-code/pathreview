@@ -93,7 +93,7 @@ None.
 
 ### Check-in 2 (end of week)
 
-**PR link:** [paste PR link here after opening it]
+**PR link:** https://github.com/ascherj/pathreview/pull/749
 
 **Branch:** fix/151-bias-detector-narrow-patterns
 
