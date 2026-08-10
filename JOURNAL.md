@@ -122,3 +122,61 @@ no new failures.)
 
 **Draft PR feedback received from:** none — submitting under today's deadline
 without time for a peer review cycle.
+
+## Week 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received:** [ ] Yes  [x] No — still awaiting review
+
+**Summary of feedback:**
+No feedback — reviewer feedback isn't provided this term (Su26). PR #749 shows
+"No reviews" as of this writing.
+
+**How you responded:**
+N/A — no feedback to respond to.
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+Trusting the course's static issue list less than I expected to. Most of the
+listed "good first issue" bugs I initially considered already had 3-5 open PRs
+from classmates when I checked the live GitHub tracker — the static list didn't
+reflect that. I also underestimated how much care broadening a regex takes: my
+first instinct was to just make patterns match more, but every widened pattern
+had to be re-checked against a dozen tests that were deliberately written to
+*not* trigger, so the actual difficulty was balancing catching more phrasings
+against not flagging neutral feedback, not the regex syntax itself.
+
+**What did you learn about working in a large codebase?**
+That an existing, well-written test file functions as the real specification —
+I never wrote a single new test for `test_bias_detector.py`; my job was making
+`bias_detector.py` satisfy behavior the maintainers had already encoded in 29
+test cases. That's different from a personal project, where I'd usually write
+the test alongside the code. It also meant I could verify a bug was real (or
+already fixed) just by running the suite, rather than trusting an issue title.
+
+**How did AI tools help — and where did they fall short?**
+AI was most useful for the unglamorous verification work: cross-referencing the
+live GitHub issue tracker against the local issue manifest, running the test
+suite to confirm the bug before committing to it, and reasoning through which
+regex changes would introduce false positives against the full test file. It
+fell short anywhere that required my own identity or judgment — claiming the
+issue with a comment, deciding between two uncontested issues, git commits and
+pushes, and opening the actual PR all had to be done by me, by design.
+
+**What would you do differently if you started over?**
+I'd check the live issue tracker for open competing PRs *before* reading the
+course's static issue list at all, instead of finding a candidate first and
+then discovering it was already claimed. I'd also set up Docker earlier in
+Week 7 — it needed an interactive `sudo` password partway through the install,
+which I didn't expect and which cost time I could have used elsewhere.
+
+**What are you most proud of?**
+Catching that several "easy" issues were stale before committing to one, and
+independently confirming the bug via the test suite instead of trusting the
+issue description. That gave me a genuinely unclaimed, well-scoped issue and a
+verified fix (32/32 tests passing, no regressions) rather than one I'd have had
+to abandon partway through after finding out it was already someone else's PR.
